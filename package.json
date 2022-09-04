@@ -1,15 +1,35 @@
 {
   "private": true,
   "scripts": {
-    "start": "eleventy --serve & postcss _styles/tailwind.css --output _site/tailwind.css --config _styles/postcss.config.js --watch",
-    "build": "eleventy && NODE_ENV=production postcss _styles/tailwind.css -o _site/tailwind.css"
+    "dev": "run-p dev:netlifycms dev:tailwind dev:eleventy",
+    "dev:eleventy": "eleventy --serve --quiet --incremental",
+    "dev:tailwind": "tailwindcss -i tailwind.css -o _site/main.css --watch",
+    "dev:netlifycms": "netlify-cms-proxy-server",
+    "build": "run-s build:eleventy build:tailwind",
+    "build:eleventy": "cross-env NODE_ENV=production eleventy",
+    "build:tailwind": "cross-env NODE_ENV=production tailwindcss -i tailwind.css -o _site/main.css --minify",
+    "debug": "cross-env DEBUG=Eleventy* eleventy",
+    "start": "run-p dev:tailwind dev:eleventy",
+    "clean": "rimraf _site"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^1.0.2",
+    "@tailwindcss/typography": "^0.5.7",
+    "alpinejs": "^3.10.3",
+    "html-minifier": "^4.0.0",
+    "js-yaml": "^4.1.0",
+    "luxon": "^3.0.3",
+    "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.1",
-    "alpinejs": "^2.7.3",
-    "autoprefixer": "^10.0.2",
-    "postcss": "^8.1.7",
-    "postcss-cli": "^8.3.0",
-    "tailwindcss": "^2.0.1"
+    "autoprefixer": "^10.4.8",
+    "cross-env": "^7.0.3",
+    "eleventy-plugin-external-links": "^1.1.2",
+    "netlify-cms-proxy-server": "^1.3.24",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "rimraf": "^3.0.2"
   }
 }
