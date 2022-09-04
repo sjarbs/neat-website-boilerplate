@@ -45,6 +45,7 @@ module.exports = function (eleventyConfig) {
   // Copy
   eleventyConfig.addPassthroughCopy({
     'node_modules/alpinejs/dist/cdn.min.js': 'main.js',
+    'netlifycms.yaml': 'admin/config.yml',
     '_static': 'static'
   })
 
